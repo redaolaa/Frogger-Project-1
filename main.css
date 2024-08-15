@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.grid {
+  height: 150px;
+  width: 500px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid div {
+  height: 33.3%;
+  width: 10%;
+  border: 1px solid #000;
+}
+
+.log {
+  background-color: brown;
+}
+
+.frog {
+background-color: green;
+
+}
