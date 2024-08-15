@@ -1,7 +1,5 @@
 const cells = Array.from({ length: 30 });
-
 const gridElement = document.querySelector(".grid");
-
 cells.forEach((cell, index) => {
   const cellElement = document.createElement("div");
   cellElement.classList.add("cell");
@@ -9,77 +7,104 @@ cells.forEach((cell, index) => {
   gridElement.appendChild(cellElement);
 });
 
-// everything below talks about the cells that we can see on the screen
 
 const gridCells = document.querySelectorAll(".cell");
 
-// Create and move the frog
+let frogPosition = 25;
 
-// create the frog position. 
-let frogPosition= 25
-// create log position
-let logPosition = 10
+let logPosition = 10;
 
-
-gridCells[frogPosition].classList.add("frog")
-gridCells[logPosition].classList.add("log")
+gridCells[frogPosition].classList.add("frog");
+gridCells[logPosition].classList.add("log");
 
 
-//Set Interval
+
 
 function moveLog() {
-  if ( logPosition %10 ===9 ){
-    gridCells[logPosition].classList.remove('log') 
-    logPosition = 10
-    gridCells[logPosition].classList.add('log')
+  if (logPosition % 10 === 9) {
+    gridCells[logPosition].classList.remove("log");
+    logPosition = 10;
+    gridCells[logPosition].classList.add("log");
   } else {
-    gridCells[logPosition].classList.remove('log')
-  logPosition= logPosition +1
-  gridCells[logPosition].classList.add('log')
+    gridCells[logPosition].classList.remove("log");
+    if (frogPosition === logPosition) {
+      moveFrogRight();
+    }
+    logPosition = logPosition + 1;
+    gridCells[logPosition].classList.add("log");
   }
-  }
-  
-  let logInterval = setInterval(moveLog, 1000);
-  
+}
 
-function checkIfFrogIsOnLog () {
-if (frogPosition !== logPosition && frogPosition >=10 &&  frogPosition <=19  ) {
-clearInterval(logInterval)
+let logInterval = setInterval(moveLog, 1000);
+
+function checkIfFrogIsOnLog() {
+  const frogIsInWater =
+    frogPosition !== logPosition && frogPosition >= 10 && frogPosition <= 19;
+
+  if (frogIsInWater) {
+    endGame();
+  } else {
+    checkForWin();
+  }
+}
+
+function checkForWin() {
+  if (frogPosition <= 9) {
+    clearInterval(logInterval);
+    setTimeout(() => {
+      alert("You have won!");
+    }, 0);
+  }
+}
+function endGame() {
+  clearInterval(logInterval);
+  document.removeEventListener("keydown", handleKeydown);
+  setTimeout(() => {
+    alert("You have lost!");
+  }, 0);
+}
+
+function moveFrogUp() {
+  gridCells[frogPosition].classList.remove("frog");
+  frogPosition = frogPosition - 10;
+  gridCells[frogPosition].classList.add("frog");
+}
+
+function moveFrogDown() {
+  gridCells[frogPosition].classList.remove("frog");
+  frogPosition = frogPosition + 10;
+  gridCells[frogPosition].classList.add("frog");
+}
+
+function moveFrogLeft() {
+  gridCells[frogPosition].classList.remove("frog");
+  frogPosition = frogPosition - 1;
+  gridCells[frogPosition].classList.add("frog");
+}
+
+function moveFrogRight() {
+  gridCells[frogPosition].classList.remove("frog");
+  frogPosition = frogPosition + 1;
+  gridCells[frogPosition].classList.add("frog");
+}
+// moves the frog using Arrowkeys
+async function handleKeydown(event) {
+  if (event.key === "ArrowDown" && !(frogPosition >= 20)) {
+    moveFrogDown();
+  } else if (event.key === "ArrowUp" && !(frogPosition <= 9)) {
+    moveFrogUp();
+  } else if (event.key === "ArrowLeft" && !(frogPosition % 10 === 0)) {
+    moveFrogLeft();
+  } else if (event.key === "ArrowRight" && !(frogPosition % 10 === 9)) {
+    moveFrogRight();
+  }
+
+  checkIfFrogIsOnLog();
 }
 
 
-  console.log(`frog is on the log ${frogPosition===logPosition}`)
-  // the same as "frog is on the log" + frogPosition===logPosition
 
-}
 
-function handleKeydown(event){
-  if (event.key === "ArrowDown" && !(frogPosition >= 20)){
-    gridCells[frogPosition].classList.remove('frog')
-    frogPosition= frogPosition +10
-    gridCells[frogPosition].classList.add('frog')
-  }
-  else if (event.key === "ArrowUp" && !(frogPosition <= 9)){
-    gridCells[frogPosition].classList.remove('frog')
-    frogPosition= frogPosition -10
-    gridCells[frogPosition].classList.add('frog')
-  }
-  else if (event.key === "ArrowLeft" && !(frogPosition%10===0)){
-    gridCells[frogPosition].classList.remove('frog')
-    frogPosition=frogPosition -1
-    gridCells[frogPosition].classList.add('frog')
-  }
+document.addEventListener("keydown", handleKeydown);
 
-  else if (event.key ==="ArrowRight" && !(frogPosition%10 ===9)){
-    gridCells[frogPosition].classList.remove('frog')
-    frogPosition= frogPosition +1
-    gridCells[frogPosition].classList.add('frog')
-  }
- 
-checkIfFrogIsOnLog()
-
-// checkForWin() if frog Position is between 0 and 9 then you've won. 
-
-} 
-document.addEventListener('keydown', handleKeydown)
 
