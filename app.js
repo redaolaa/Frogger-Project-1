@@ -1,5 +1,6 @@
 const cells = Array.from({ length: 30 });
 const gridElement = document.querySelector(".grid");
+
 cells.forEach((cell, index) => {
   const cellElement = document.createElement("div");
   cellElement.classList.add("cell");
@@ -7,18 +8,22 @@ cells.forEach((cell, index) => {
   gridElement.appendChild(cellElement);
 });
 
-
-const gridCells = document.querySelectorAll(".cell");
-
+// to restart game when losing or winning
+// create a function to start the game which includes creating grid + frog/logPositions & logInterval
+// i can then call this @endGame & @checkForWin
 let frogPosition = 25;
-
 let logPosition = 10;
+const gridCells = document.querySelectorAll(".cell");
+let logInterval;
 
-gridCells[frogPosition].classList.add("frog");
-gridCells[logPosition].classList.add("log");
-
-
-
+function startGame() {
+  frogPosition = 25;
+  logPosition = 10;
+  document.addEventListener("keydown", handleKeydown);
+  gridCells[frogPosition].classList.add("frog");
+  gridCells[logPosition].classList.add("log");
+  logInterval = setInterval(moveLog, 1000);
+}
 
 function moveLog() {
   if (logPosition % 10 === 9) {
@@ -33,9 +38,8 @@ function moveLog() {
     logPosition = logPosition + 1;
     gridCells[logPosition].classList.add("log");
   }
+  checkIfFrogIsOnEdge();
 }
-
-let logInterval = setInterval(moveLog, 1000);
 
 function checkIfFrogIsOnLog() {
   const frogIsInWater =
@@ -48,20 +52,39 @@ function checkIfFrogIsOnLog() {
   }
 }
 
+function checkIfFrogIsOnEdge() {
+  const frogIsOnEdge = frogPosition === logPosition && frogPosition % 10 === 9;
+  if (frogIsOnEdge) {
+    endGame();
+  } else {
+    checkForWin();
+  }
+}
+
 function checkForWin() {
   if (frogPosition <= 9) {
     clearInterval(logInterval);
     setTimeout(() => {
       alert("You have won!");
-    }, 0);
+    }, 100);
   }
 }
 function endGame() {
   clearInterval(logInterval);
   document.removeEventListener("keydown", handleKeydown);
+
   setTimeout(() => {
-    alert("You have lost!");
-  }, 0);
+    gridCells.forEach((cell) => cell.classList.remove("frog", "log"));
+    const playAgain = prompt("Play again? Y");
+    console.log(playAgain);
+    // if user want to play again then start game if not then display thanks
+    if (playAgain === "Y" || playAgain === "y") {
+      startGame();
+    } else {
+      alert("Thanks for Playing!");
+      console.log("Thanks for playing!");
+    }
+  }, 500);
 }
 
 function moveFrogUp() {
@@ -102,9 +125,4 @@ async function handleKeydown(event) {
   checkIfFrogIsOnLog();
 }
 
-
-
-
-document.addEventListener("keydown", handleKeydown);
-
-
+document.addEventListener("DOMContentLoaded", startGame);
