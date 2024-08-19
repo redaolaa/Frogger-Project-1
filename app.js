@@ -1,4 +1,4 @@
-const cells = Array.from({ length: 30 });
+const cells = Array.from({ length: 100 });
 const gridElement = document.querySelector(".grid");
 
 cells.forEach((cell, index) => {
@@ -11,39 +11,90 @@ cells.forEach((cell, index) => {
 // to restart game when losing or winning
 // create a function to start the game which includes creating grid + frog/logPositions & logInterval
 // i can then call this @endGame & @checkForWin
-let frogPosition = 25;
-let logPosition = 10;
+let frogPosition = 95;
+let logPositionRight = [80, 81, 70, 71, 50, 51, 52, 23, 24];
+let logPositionLeft = [66, 67, 41, 42, 36, 37, 38, 12, 13, 14];
 const gridCells = document.querySelectorAll(".cell");
 let logInterval;
 
 function startGame() {
-  frogPosition = 25;
-  logPosition = 10;
+  frogPosition = 95;
+  logPositionRight = [80, 81, 70, 71, 50, 51, 52, 23, 24]; // defined as an array
+  logPositionLeft = [66, 67, 41, 42, 36, 37, 38, 12, 13, 14];
   document.addEventListener("keydown", handleKeydown);
   gridCells[frogPosition].classList.add("frog");
-  gridCells[logPosition].classList.add("log");
-  logInterval = setInterval(moveLog, 1000);
+  logPositionRight.forEach((position) =>
+    gridCells[position].classList.add("log")
+  ); // each posiiton in 'logPosition' is assigned the log class so that both appear when game starts
+  // gridCells[logPosition].classList.add("log"); this was just one log
+  logPositionLeft.forEach((position) =>
+    gridCells[position].classList.add("log")
+  );
+  logInterval = setInterval(moveLog, 3000);
 }
 
+// to add different logs- create new array?
+
 function moveLog() {
-  if (logPosition % 10 === 9) {
-    gridCells[logPosition].classList.remove("log");
-    logPosition = 10;
-    gridCells[logPosition].classList.add("log");
-  } else {
-    gridCells[logPosition].classList.remove("log");
-    if (frogPosition === logPosition) {
-      moveFrogRight();
-    }
-    logPosition = logPosition + 1;
-    gridCells[logPosition].classList.add("log");
+  console.log(logPositionRight, frogPosition,logPositionRight.includes(frogPosition) )
+
+  if (logPositionRight.includes(frogPosition)) {
+    moveFrogRight();
+  } else if (logPositionLeft.includes(frogPosition)) {
+    moveFrogLeft();
   }
+  logPositionRight = logPositionRight.map((position) => {
+    gridCells[position].classList.remove("log"); // this removes the logs from their positions.
+    position = position % 10 === 9 ? position - 9 : position + 1;
+
+    // if log is at right edge -9 so it is moved to the left.
+    //if not at right edge, +1 to move one cell to the right
+    return position;
+  });
+
+  logPositionLeft = logPositionLeft.map((position) => {
+    gridCells[position].classList.remove("log");
+    position = position % 10 === 9 ? position + 9 : position - 1;
+    return position;
+  });
+
+  logPositionRight.forEach((position) =>
+    gridCells[position].classList.add("log")
+  ); // this adds the logs to the new position.
+  logPositionLeft.forEach((position) =>
+    gridCells[position].classList.add("log")
+  );
+
+
   checkIfFrogIsOnEdge();
 }
 
+// function moveLog() {
+//   if (logPosition % 10 === 9) {
+//     gridCells[logPosition].classList.remove("log");
+//     logPosition = 10;
+//     gridCells[logPosition].classList.add("log");
+//   } else {
+//     gridCells[logPosition].classList.remove("log");
+//     if (frogPosition === logPosition) {
+//       moveFrogRight();
+//     }
+//     logPosition = logPosition + 1;
+//     gridCells[logPosition].classList.add("log");
+//   }
+//   checkIfFrogIsOnEdge();
+// }
+
 function checkIfFrogIsOnLog() {
+  console.log("frogPosition", frogPosition);
+
   const frogIsInWater =
-    frogPosition !== logPosition && frogPosition >= 10 && frogPosition <= 19;
+    !logPositionRight.includes(frogPosition) &&
+    !logPositionLeft.includes(frogPosition) &&
+    frogPosition >= 10 &&
+    frogPosition <= 89;
+
+  console.log("frogIsInWater", frogIsInWater);
 
   if (frogIsInWater) {
     endGame();
@@ -53,7 +104,9 @@ function checkIfFrogIsOnLog() {
 }
 
 function checkIfFrogIsOnEdge() {
-  const frogIsOnEdge = frogPosition === logPosition && frogPosition % 10 === 9;
+  const frogIsOnEdge =
+    logPositionLeft.includes(frogPosition) ||
+    (logPositionRight.includes(frogPosition) && frogPosition % 10 === 9);
   if (frogIsOnEdge) {
     endGame();
   } else {
