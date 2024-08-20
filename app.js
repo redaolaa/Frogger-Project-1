@@ -4,7 +4,7 @@ const gridElement = document.querySelector(".grid");
 cells.forEach((cell, index) => {
   const cellElement = document.createElement("div");
   cellElement.classList.add("cell");
-  cellElement.textContent = index;
+  // cellElement.textContent = index;
   gridElement.appendChild(cellElement);
 });
 
