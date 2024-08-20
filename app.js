@@ -1,6 +1,7 @@
 const cells = Array.from({ length: 100 });
 const gridElement = document.querySelector(".grid");
 const soundtrack = document.getElementById("olaf-soundtrack");
+const endGameSoundtrack = document.getElementById("olaf-game-over-sound");
 
 cells.forEach((cell, index) => {
   const cellElement = document.createElement("div");
@@ -46,15 +47,16 @@ function startGame() {
   logInterval = setInterval(moveLog, 3000);
   carInterval = setInterval(moveCars, 1000);
 
-  // Correct way to select cells and add IDs or classes
-  const cellsWithLogs = document.querySelectorAll(".grid .cell");
+  // to add water  background to logs //
 
-  cellsWithLogs.forEach((cell, index) => {
-    if (index >= 20 && index <= 69) {
-      // Using class for multiple cells
-      cell.classList.add("special-background");
-    }
-  });
+  // const cellsWithLogs = document.querySelectorAll(".grid .cell");
+
+  // cellsWithLogs.forEach((cell, index) => {
+  //   if (index >= 20 && index <= 69) {
+  //     // Using class for multiple cells
+  //     cell.classList.add("special-background");
+  //   }
+  // });
 }
 
 // to add different logs- create new array?
@@ -152,7 +154,7 @@ function checkIfFrogIsOnLog() {
   const frogIsInWater =
     !logPositionRight.includes(frogPosition) &&
     !logPositionLeft.includes(frogPosition) &&
-    frogPosition >= 10 &&
+    frogPosition >= 20 &&
     frogPosition <= 69;
 
   console.log("frogIsInWater", frogIsInWater);
@@ -204,20 +206,41 @@ function checkFrogHitCar() {
 function endGame() {
   // document.removeEventListener("keydown", handleKeydown);
 
-  setTimeout(() => {
-    gridCells.forEach((cell) => cell.classList.remove("frog", "log", "car"));
-    frogPosition = 95;
-    gridCells[frogPosition].classList.add("frog");
-    const playAgain = prompt("Play again? Y");
-    console.log(playAgain);
-    // if user want to play again then start game if not then display thanks
-    if (playAgain === "Y" || playAgain === "y") {
-      startGame();
-    } else {
-      alert("Thanks for Playing!");
-      console.log("Thanks for playing!");
-    }
-  }, 500);
+  // setTimeout(() => {
+  //   gridCells.forEach((cell) => cell.classList.remove("frog", "log", "car"));
+  //   frogPosition = 95;
+  //   gridCells[frogPosition].classList.add("frog");
+  //   const playAgain = prompt("Play again? Y");
+  //   console.log(playAgain);
+  //   // if user want to play again then start game if not then display thanks
+  //   if (playAgain === "Y" || playAgain === "y") {
+  //     startGame();
+  //   } else {
+  //     alert("Thanks for Playing!");
+  //     console.log("Thanks for playing!");
+  //   }
+  // }, 500);
+
+  soundtrack.pause();
+  soundtrack.currentTime = 0;
+  endGameSoundtrack.play();
+
+  // Clear the game state and UI elements
+  gridCells.forEach((cell) => cell.classList.remove("frog", "log", "car"));
+  frogPosition = 95;
+  gridCells[frogPosition].classList.add("frog");
+
+  // Create a "Play Again" button
+  const playAgainButton = document.createElement("button");
+  playAgainButton.textContent = "Play Again";
+  playAgainButton.className = "play-again-button"; // Add a class for styling
+
+  // Add an event listener to the button
+  playAgainButton.addEventListener("click", () => {
+    window.location.reload(); // Refresh the page
+  });
+
+  document.body.appendChild(playAgainButton);
 }
 
 function moveFrogUp() {
