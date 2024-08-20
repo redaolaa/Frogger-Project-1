@@ -4,13 +4,10 @@
   box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
   height: 100%;
 }
-.grid-container {
-  border: solid 1px black;
-}
-
 
 .container {
   display: flex;
@@ -21,42 +18,71 @@ body, html {
   margin-top: 50px;
 }
 
+.gridContainer {
+  display: block;
+  border: solid 5px black;
+  height: auto;
+  overflow: hidden; /* or overflow: auto; */
+  width: 100%;
+  max-width: 900px;
+}
 
-
-h1, h2{
+h1,
+h2 {
   text-align: center;
   margin-bottom: 20px;
- }
-
-
-
+}
 
 .grid {
-    height: 200px;
-    width: 900px;
+  width: 100%;
+  max-width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-
 .grid div {
-  height: 33.3%;
-  width: 10%;
-  /* border: 1px solid #000; */
+  width: 10%; /* This gives you 10 columns across the width of the grid */
+  padding-bottom: 10%; /* This ensures that the height is equal to the width */
+  position: relative; /* Ensures that the frog image can be positioned inside */
+  box-sizing: border-box; /* Makes sure padding and borders don't affect the size */
+  border-bottom: 1px solid black;
+}
+
+.grid div:nth-child(-n + 10) {
+  /* Your styles here */
+  background-image: url(./assets/dandelion.gif);
+  background-size: cover;
 }
 
 .log {
   background-color: brown;
+  z-index: 999999;
+  position: absolute; /* Ensure that logs are positioned relative to their container */
 }
 
-.frog {
-background-color: green;
+/* .special-background {
+  background-image: url("./assets/water.gif");
+ background-size: cover;
+  background-position: center; 
+   z-index: 2;
+} */
 
+.frog {
+  background-image: url("./assets/olaf.gif");
+  background-size: contain; /* Scales the image to fit within the cell */
+  background-position: center; /* Centers the image in the cell */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  width: 100%; /* Ensures the image covers the entire width of the cell */
+  height: 100%; /* Ensures the image covers the entire height of the cell */
+  position: absolute; /* Positions the image within the cell */
+  top: 0;
+  left: 0;
 }
 
 .car {
-background-color: black;
+  background-image: url(./assets/fire.gif);
+  background-size: contain; /* Scales the image to fit within the cell */
+  background-position: center; /* Centers the image in the cell */
+  background-repeat: no-repeat;
 }
-
-

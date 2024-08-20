@@ -1,5 +1,6 @@
 const cells = Array.from({ length: 100 });
 const gridElement = document.querySelector(".grid");
+const soundtrack = document.getElementById("olaf-soundtrack");
 
 cells.forEach((cell, index) => {
   const cellElement = document.createElement("div");
@@ -12,23 +13,23 @@ cells.forEach((cell, index) => {
 // create a function to start the game which includes creating grid + frog/logPositions & logInterval
 // i can then call this @endGame & @checkForWin
 let frogPosition = 95;
-let logPositionRight = [ 50, 51, 52, 25, 26, 36, 37, 38];
+let logPositionRight = [50, 51, 52, 25, 26, 36, 37, 38];
 let logPositionLeft = [66, 67, 41, 42];
-let carPositionRight= [80, 86, 11, 16]
-let carPositionLeft= [72,75]
+let carPositionRight = [80, 86, 11, 16];
+let carPositionLeft = [72, 75];
 const gridCells = document.querySelectorAll(".cell");
 let logInterval;
 
 function startGame() {
   frogPosition = 95;
-  logPositionRight = [ 50, 51, 52, 25, 26, 36, 37, 38]; // defined as an array
+  logPositionRight = [50, 51, 52, 25, 26, 36, 37, 38]; // defined as an array
   logPositionLeft = [66, 67, 41, 42];
-  carPositionRight=[80, 86, 11, 16]
-  carPositionLeft= [72,75]
+  carPositionRight = [80, 86, 11, 16];
+  carPositionLeft = [72, 75];
 
   document.addEventListener("keydown", handleKeydown);
   gridCells[frogPosition].classList.add("frog");
-  
+
   logPositionRight.forEach((position) =>
     gridCells[position].classList.add("log")
   ); // each posiiton in 'logPosition' is assigned the log class so that both appear when game starts
@@ -43,13 +44,27 @@ function startGame() {
     gridCells[position].classList.add("car")
   );
   logInterval = setInterval(moveLog, 3000);
-  carInterval = setInterval(moveCars, 1000)
+  carInterval = setInterval(moveCars, 1000);
+
+  // Correct way to select cells and add IDs or classes
+  const cellsWithLogs = document.querySelectorAll(".grid .cell");
+
+  cellsWithLogs.forEach((cell, index) => {
+    if (index >= 20 && index <= 69) {
+      // Using class for multiple cells
+      cell.classList.add("special-background");
+    }
+  });
 }
 
 // to add different logs- create new array?
 
 function moveLog() {
-  console.log(logPositionRight, frogPosition,logPositionRight.includes(frogPosition) )
+  console.log(
+    logPositionRight,
+    frogPosition,
+    logPositionRight.includes(frogPosition)
+  );
 
   if (logPositionRight.includes(frogPosition)) {
     moveFrogRight();
@@ -78,7 +93,6 @@ function moveLog() {
     gridCells[position].classList.add("log")
   );
 
-
   checkIfFrogIsOnEdge();
 }
 
@@ -101,16 +115,14 @@ function moveLog() {
 function moveCars() {
   carPositionRight = carPositionRight.map((position) => {
     gridCells[position].classList.remove("car"); // this removes the car from their positions.
-    
-    
+
     position = position % 10 === 9 ? position - 9 : position + 1;
 
     // if log is at right edge -9 so it is moved to the left.
     //if not at right edge, +1 to move one cell to the right
-    if (position ===frogPosition) {
-      endGame ();
+    if (position === frogPosition) {
+      endGame();
     }
-
 
     return position;
   });
@@ -119,15 +131,12 @@ function moveCars() {
     gridCells[position].classList.remove("car");
     position = position % 10 === 0 ? position + 9 : position - 1;
 
-    if (position ===frogPosition) {
-      endGame ();
+    if (position === frogPosition) {
+      endGame();
     }
 
     return position;
- 
-
-
-  })
+  });
 
   carPositionRight.forEach((position) =>
     gridCells[position].classList.add("car")
@@ -135,13 +144,7 @@ function moveCars() {
   carPositionLeft.forEach((position) =>
     gridCells[position].classList.add("car")
   );
-
-
 }
-
-
-
-
 
 function checkIfFrogIsOnLog() {
   console.log("frogPosition", frogPosition);
@@ -175,7 +178,7 @@ function checkIfFrogIsOnEdge() {
 function checkForWin() {
   if (frogPosition <= 9) {
     clearInterval(logInterval);
-    clearInterval(carInterval)
+    clearInterval(carInterval);
     setTimeout(() => {
       alert("You have won!");
     }, 100);
@@ -183,30 +186,28 @@ function checkForWin() {
 }
 
 function checkFrogHitCar() {
-const frogIsOnRoad =
-carPositionRight.includes(frogPosition) || carPositionLeft.includes(frogPosition) &&
-frogPosition >= 70 &&
-frogPosition <= 89;
+  const frogIsOnRoad =
+    carPositionRight.includes(frogPosition) ||
+    (carPositionLeft.includes(frogPosition) &&
+      frogPosition >= 70 &&
+      frogPosition <= 89);
 
-console.log("frogIsOnRoad", frogIsOnRoad);
+  console.log("frogIsOnRoad", frogIsOnRoad);
 
-if (frogIsOnRoad) {
-  endGame();
-} else {
-  checkForWin();
+  if (frogIsOnRoad) {
+    endGame();
+  } else {
+    checkForWin();
+  }
 }
-
-}
-
 
 function endGame() {
-
   // document.removeEventListener("keydown", handleKeydown);
 
   setTimeout(() => {
     gridCells.forEach((cell) => cell.classList.remove("frog", "log", "car"));
-    frogPosition= 95;
-    gridCells[frogPosition].classList.add("frog")
+    frogPosition = 95;
+    gridCells[frogPosition].classList.add("frog");
     const playAgain = prompt("Play again? Y");
     console.log(playAgain);
     // if user want to play again then start game if not then display thanks
@@ -244,6 +245,8 @@ function moveFrogRight() {
 }
 // moves the frog using Arrowkeys
 async function handleKeydown(event) {
+  soundtrack.play();
+
   if (event.key === "ArrowDown" && !(frogPosition >= 90)) {
     moveFrogDown();
   } else if (event.key === "ArrowUp" && !(frogPosition <= 9)) {
