@@ -27,10 +27,8 @@ body {
 .gridContainer {
   display: block;
   height: auto;
-  overflow: hidden; /* or overflow: auto; */
   width: 100%;
-  max-width: 900px;
-  /* background-color: aliceblue; */
+  max-width: 630px;
   background: rgba(255, 255, 255, 0.3); /* Semi-transparent background */
   backdrop-filter: blur(10px);
   border-radius: 16px;
@@ -43,7 +41,6 @@ h2 {
 }
 
 .grid {
-  width: 100%;
   max-width: 100%;
   display: flex;
   flex-wrap: wrap;
