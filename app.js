@@ -49,14 +49,14 @@ function startGame() {
 
   // to add water  background to logs //
 
-  // const cellsWithLogs = document.querySelectorAll(".grid .cell");
+  const cellsWithLogs = document.querySelectorAll(".grid .cell");
 
-  // cellsWithLogs.forEach((cell, index) => {
-  //   if (index >= 20 && index <= 69) {
-  //     // Using class for multiple cells
-  //     cell.classList.add("special-background");
-  //   }
-  // });
+  cellsWithLogs.forEach((cell, index) => {
+    if (index >= 20 && index <= 69) {
+      // Using class for multiple cells
+      cell.classList.add("special-background");
+    }
+  });
 }
 
 // to add different logs- create new array?
@@ -181,10 +181,36 @@ function checkForWin() {
   if (frogPosition <= 9) {
     clearInterval(logInterval);
     clearInterval(carInterval);
-    setTimeout(() => {
-      alert("You have won!");
-    }, 100);
+    addWinDialog();
   }
+}
+
+function addWinDialog() {
+  const dialog = document.getElementById("winDialog");
+
+  // Show the dialog
+  dialog.showModal();
+  document.removeEventListener("keydown", handleKeydown);
+
+  // Add an event listener to the Play Again button inside the dialog
+  const playAgainButton = document.getElementById("playAgainButton");
+  playAgainButton.addEventListener("click", () => {
+    window.location.reload(); // Refresh the page
+  });
+}
+
+function addLoseDialog() {
+  const dialog = document.getElementById("loseDialog");
+
+  // Show the dialog
+  dialog.showModal();
+  document.removeEventListener("keydown", handleKeydown);
+
+  // Add an event listener to the Play Again button inside the dialog
+  const playAgainButton = document.getElementById("playAgainLoserButton");
+  playAgainButton.addEventListener("click", () => {
+    window.location.reload(); // Refresh the page
+  });
 }
 
 function checkFrogHitCar() {
@@ -230,17 +256,25 @@ function endGame() {
   frogPosition = 95;
   gridCells[frogPosition].classList.add("frog");
 
-  // Create a "Play Again" button
-  const playAgainButton = document.createElement("button");
-  playAgainButton.textContent = "Play Again";
-  playAgainButton.className = "play-again-button"; // Add a class for styling
+  addLoseDialog();
 
-  // Add an event listener to the button
-  playAgainButton.addEventListener("click", () => {
-    window.location.reload(); // Refresh the page
-  });
+  // // Create a "Play Again" button
+  // const playAgainButton = document.createElement("button");
+  // playAgainButton.textContent = "Play Again";
+  // playAgainButton.className = "play-again-button"; // Add a class for styling
 
-  document.body.appendChild(playAgainButton);
+  // // Add an event listener to the button
+  // playAgainButton.addEventListener("click", () => {
+  //   window.location.reload(); // Refresh the page
+  // });
+
+  // document.addEventListener("keypress", function (e) {
+  //   if (e.key === "Enter") {
+  //     window.location.reload(); // Refresh the page
+  //   }
+  // });
+
+  // document.body.appendChild(playAgainButton);
 }
 
 function moveFrogUp() {

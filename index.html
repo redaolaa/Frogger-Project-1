@@ -11,11 +11,26 @@
     <audio id="olaf-soundtrack" src="./assets/olaf_song.mp3" preload="auto"> </audio>
     <audio id="olaf-game-over-sound" src="./assets/olaf-dead.mp3" preload="auto"> </audio>
 
+      <!-- winner dialog element -->
+  <dialog id="winDialog" class="dialog-container">
+    <img id="winGif" src="assets/winOlaf.gif" alt="Win GIF">
+    <p class="winner-message">You've won!</p>
+    <button id="playAgainButton">Play Again</button>
+  </dialog>
+
+        <!-- play again dialog element -->
+        <dialog id="loseDialog" class="dialog-container">
+          <img id="winGif" src="assets/loseOlaf.gif" alt="Win GIF">
+          <p class="winner-message">OH NOOO! YOU LOST !
+          </p>
+          <button id="playAgainLoserButton">Play Again</button>
+        </dialog>
+
     <div class="container">
-      <h1>Frogger Game</h1>
+      <h1>Olaf's Quest To Summer</h1>
       <h2>
-        Help the little froggie cross to it's home safely using the logs and
-        avoiding getting squashed by a car!
+        Help Olaf cross to the dandelion field safely using the logs and
+        avoiding the fire!
       </h2>
       <div class="gridContainer">
         <div class="grid"></div>
