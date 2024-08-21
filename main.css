@@ -12,6 +12,7 @@ html {
 body {
   background-image: url(./assets/snow-background.gif);
   background-size: cover;
+  overflow-y: hidden;
 }
 
 .container {
@@ -64,9 +65,7 @@ h2 {
 
 .grid div.frog:nth-child(-n + 10) {
   background-image: url(./assets/olafdandelion.gif);
- 
 }
-
 
 /* .grid div:nth-child(n + 91) {
   background-image: url(./assets/snow-mountains.png);
@@ -84,11 +83,9 @@ h2 {
 }
 
 .special-background {
-   animation: waterPulse 3s infinite;
-   border-radius: 9px;
+  animation: waterPulse 2s infinite;
+  border-radius: 9px;
 }
-
-
 
 /* .grid div.frog:nth-child(-n + 10) {
   /* Your styles here */
@@ -162,7 +159,7 @@ dialog::backdrop {
 /* Style for the GIF */
 #winGif {
   max-width: 100%;
-  height: auto;
+  height: 430px;
   margin-bottom: 10px;
 }
 
@@ -195,7 +192,12 @@ dialog::backdrop {
     background-color: rgba(0, 191, 255, 0.3); /* Light blue with transparency */
   }
   50% {
-    background-color: rgba(30, 144, 255, 0.3); /* Dodger blue with transparency */
+    background-color: rgba(
+      30,
+      144,
+      255,
+      0.3
+    ); /* Dodger blue with transparency */
   }
   100% {
     background-color: rgba(0, 191, 255, 0.3); /* Light blue with transparency */
