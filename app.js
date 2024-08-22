@@ -98,22 +98,6 @@ function moveLog() {
   checkIfFrogIsOnEdge();
 }
 
-// function moveLog() {
-//   if (logPosition % 10 === 9) {
-//     gridCells[logPosition].classList.remove("log");
-//     logPosition = 10;
-//     gridCells[logPosition].classList.add("log");
-//   } else {
-//     gridCells[logPosition].classList.remove("log");
-//     if (frogPosition === logPosition) {
-//       moveFrogRight();
-//     }
-//     logPosition = logPosition + 1;
-//     gridCells[logPosition].classList.add("log");
-//   }
-//   checkIfFrogIsOnEdge();
-// }
-
 function moveCars() {
   carPositionRight = carPositionRight.map((position) => {
     gridCells[position].classList.remove("car"); // this removes the car from their positions.
@@ -258,23 +242,6 @@ function endGame() {
 
   addLoseDialog();
 
-  // // Create a "Play Again" button
-  // const playAgainButton = document.createElement("button");
-  // playAgainButton.textContent = "Play Again";
-  // playAgainButton.className = "play-again-button"; // Add a class for styling
-
-  // // Add an event listener to the button
-  // playAgainButton.addEventListener("click", () => {
-  //   window.location.reload(); // Refresh the page
-  // });
-
-  // document.addEventListener("keypress", function (e) {
-  //   if (e.key === "Enter") {
-  //     window.location.reload(); // Refresh the page
-  //   }
-  // });
-
-  // document.body.appendChild(playAgainButton);
 }
 
 function moveFrogUp() {
