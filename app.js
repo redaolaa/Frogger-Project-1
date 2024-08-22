@@ -44,7 +44,7 @@ function startGame() {
   carPositionLeft.forEach((position) =>
     gridCells[position].classList.add("car")
   );
-  logInterval = setInterval(moveLog, 3000);
+  logInterval = setInterval(moveLog, 1500);
   carInterval = setInterval(moveCars, 1000);
 
   // to add water  background to logs //

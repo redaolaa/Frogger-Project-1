@@ -13,6 +13,8 @@ body {
   background-image: url(./assets/snow-background.gif);
   background-size: cover;
   overflow-y: hidden;
+  overflow-x: hidden;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .container {
@@ -38,6 +40,40 @@ h1,
 h2 {
   text-align: center;
   margin-bottom: 20px;
+}
+
+h1 {
+  font-family: "Pirata One", serif;
+  font-size: 4rem;
+  text-align: center;
+  color: #6ea6d7; /* Softer, muted blue */
+  letter-spacing: 2px;
+  text-shadow: 0 0 5px #9acde0, /* Lighter, soft glow */ 0 0 10px #9acde0,
+    0 0 15px #86bbd8, 0 0 20px #74aacd, 0 0 25px #6299c2, 0 0 30px #5188b7,
+    0 0 35px #4177ac;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  transform: rotate(-2deg);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+h1:hover {
+  transform: scale(1.05);
+}
+
+h2 {
+  font-family: "Pirata One", serif;
+  font-size: 1rem;
+  text-align: center;
+  color: #b3d7f5;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3), 0 0 5px rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+h2:hover {
+  color: #d4e7ff;
+  transform: scale(1.05);
 }
 
 .grid {
@@ -72,7 +108,7 @@ h2 {
 } */
 
 .log {
-  background-image: url("./assets/log.png");
+  background-image: url("./assets/floatingice.png");
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -104,11 +140,11 @@ h2 {
 }
 
 .frog.log {
-  background-image: url("./assets/olafonlog.gif");
+  background-image: url("./assets/olafonice.gif");
 }
 
 .car {
-  background-image: url(./assets/fire.gif);
+  background-image: url(./assets/icicle.gif);
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -130,15 +166,47 @@ h2 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Styles for the dialog element */
+.play-again-button:hover {
+  /* background-color: #45a049; Slightly darker green */
+  /* transform: translate(-50%, -50%) scale(1.05); Slightly enlarges the button */
+  /* border: 2px solid #4caf50; Adds a border */
+  /* color: #ffffff;  */
+  transform: scale(1.05);
+}
+
 .dialog-container {
   border: none;
   border-radius: 8px;
-  padding: 60px;
+  padding: 10px;
   max-width: 80%;
   margin: auto;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: popIn 0.5s ease-out;
+  opacity: 1;
+}
+
+.dialog-container.hide {
+  animation: fadeOut 0.5s ease-out;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 /* Center the dialog in the middle of the viewport */
@@ -156,7 +224,7 @@ dialog::backdrop {
 /* Style for the GIF */
 #winGif {
   max-width: 100%;
-  height: 430px;
+  height: 230px;
   margin-bottom: 10px;
 }
 
@@ -164,39 +232,79 @@ dialog::backdrop {
 #playAgainButton,
 #playAgainLoserButton {
   margin-top: 10px;
-  font-size: 40px;
+  font-size: 20px;
   padding: 20px;
   border: none;
   border-radius: 12px;
-  background-color: #4caf50;
+  background-color: #816ff6;
   color: white;
   cursor: pointer;
   z-index: 1000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(245, 253, 255, 0.2);
   cursor: pointer;
 }
 
 .winner-message {
-  font-size: 24px;
+  font-size: 20px;
+  font-family: "Pirata One", serif;
+  font-style: italic;
+  color: lightskyblue;
+  text-shadow: 1px 1px 2px rgba(135, 206, 250, 0.7),
+    /* Light sky blue shadow */ 0 0 5px rgba(135, 206, 250, 0.5);
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 8px; /* Rounded corners for a friendly look */
+  background: rgba(255, 255, 255, 0.8); /* Light background for contrast */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
 #playAgainButton:hover {
-  background-color: #45a049;
+  background-color: #afaacd;
+}
+
+#playAgainLoserButton:hover {
+  background-color: #afaacd;
 }
 
 @keyframes waterPulse {
   0% {
-    background-color: rgba(0, 191, 255, 0.3); /* Light blue with transparency */
+    background-color: rgba(0, 191, 255, 0.3);
   }
   50% {
-    background-color: rgba(
-      30,
-      144,
-      255,
-      0.3
-    ); /* Dodger blue with transparency */
+    background-color: rgba(30, 144, 255, 0.3);
   }
   100% {
-    background-color: rgba(0, 191, 255, 0.3); /* Light blue with transparency */
+    background-color: rgba(0, 191, 255, 0.3);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes moveAcross {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%); /* Adjust as needed */
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px); /* Adjust this value for more or less float */
+  }
+  100% {
+    transform: translateY(0);
   }
 }
