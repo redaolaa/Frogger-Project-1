@@ -122,13 +122,13 @@ Displayed the Dialogs with Javascript:
 
 addWinDialog(): This function displays the win dialog when the player wins the game. It also removes the keydown event listener to stop the frog from moving. It restarts the game when clicking the button by refreshing the page.
 
-![alt text](./assets/winDialog.png)
+![alt text](./assets/WinDialog.png)
 
 
 
 addLoseDialog(): This function displays the lose dialog when the player loses. Similar to the win dialog, it removes the keydown event listener which stops the frog from moving and provides a button to restart the game which is done through refreshing it.
 
-![alt text](./assets/loseDialog.png)
+![alt text](./assets/LoseDialog.png)
 
 
 
